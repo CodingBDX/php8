@@ -1,4 +1,11 @@
+# Git 🎁
+git init
+git add .
+git commit -m "" , on peut rajouter un -m "" pour specifie plus de messages
+git remote add origin "route du github"
+git push origin "master" ou le nom de la branche 👍
 
+***
 # Exception
 <!-- quand ajouter des exceptions en php -->
 il faut en ajouter quand c'est des erreurs liées au code et non a l utilisation du site
