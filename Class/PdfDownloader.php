@@ -6,8 +6,8 @@ interface PdfDownloader
 {
     // public const SIZE = 0;
 
-    public function __construct();
+    // public function __construct();
 
-    public function DownloadPfd(): string;
+    public function DownloadPfd(?int $size = null): string;
       
 }
