@@ -1,39 +1,51 @@
-<?php 
+<?php
+
 namespace Router;
 
-use Collator;
 use Exceptions\RouteNotFoundException;
 
-class Router {
+class Router
+{
+    private array $routes = [];
 
-    private array $routes;
-
-    public function register(string $path, callable|array $action): void {
-
-        $this->routes[$path] = $action;
-    }
-
-    public function resolve(string $uri) 
-    
+    public function register(string $path, callable|array $action, string $verb): void
     {
-
-       $path = explode('?', $uri)[0];
-       $action = $this->routes[$path] ?? null;
-
-  if(is_callable($action)){
-  return $action();
+        $this->routes[$verb][$path] = $action;
     }
 
-    if(is_array(($action))) {
-        [$className, $method] =  $action;
+    public function get(string $path, callable|array $action): void
+    {
+        $this->register($path, $action, 'GET');
+    }
 
-        if(class_exists($className) && method_exists($className, $method)) {
-            $class = new $className();
-            return call_user_func([$class, $method], []);
+    public function post(string $path, callable|array $action): void
+    {
+        $this->register($path, $action, 'POST');
+    }
+
+    public function routes(): array
+    {
+        return $this->routes;
+    }
+
+    public function resolve(string $requestUri, string $requestMethod): mixed
+    {
+        $path = explode('?', $requestUri)[0];
+        $action = $this->routes[$requestMethod][$path] ?? null;
+
+        if (is_callable($action)) {
+            return $action();
         }
-    }
+        
+        if (is_array($action)) {
+            [$className, $method] = $action;
 
-    
-      throw new RouteNotFoundException();
-}
+            if (class_exists($className) && method_exists($className, $method)) {
+                $class = new $className();
+                return call_user_func_array([$class, $method], []);
+            }
+        }
+
+        throw new RouteNotFoundException();
+    }
 }

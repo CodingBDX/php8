@@ -95,3 +95,58 @@ plus esthetique et simple de rendre une vue en utilisant type `static`
 
 ## class magic
 permet de faire adopter a la class ou function un comportement, elle commence toujours par _to
+
+***
+## chargement class
+possible de faire appel a une function d'une class comme ceci `(new App($route))->new();`
+
+## apparte mysql
+pour creer une table CREATE TABLE ensuite toujours creer le id en type INT et valeur primary key not null (obligation d'implemanter)
+pour incrementer dans une table `insert into le nom de la table puis values`
+
+## relier code a table sql utilisation de class mere \PDO
+il faut definir une nouvelle instance $pdo = new \PDO('mysql:dbname=name of db';host=host defini avec docker, 'user', 'password') ensuite dans un array = [] on peut lui indiquer d'envoyer toutes les données sous forme d'object
+\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ et pour renvoyer les erreurs sous forme d'exception
+ \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+
+ essayer de mettre des constante pour user password host et les appeler constant::db_user
+
+ retourner les infos de la base function getpdo: \PDO avec return static::$pdo
+
+ pour prendre les données ne pas oublier de query('SELECT * FROM USER') on prend tout de la class user puis un fetchAll
+
+ ## framework
+ sur les framework c'est beaucoup plus simple de recuperer les infos des tables `$nomdetable->all();`
+ il ne faut pas a chaque fois taper les tables un simple 'private string $table = 'users' puis dans le query de pdo injecter avec `{$this->table}`
+
+ ## recuperation de la class pour joindre le nom de la class avec le nom de table
+ $this->table = get_class($this); il recuperer l'entierter du model Model/user il faut donc faire un explode
+ $this->table = explode('\\', get_class($this)[1]); il prend juste en compte user de la class qui correspond au user de la table puis strtolower pour s'assurer qu'il soit en minuscule
+
+## function compact
+compact permet de sortir le resultat en tableau au lieu dans array
+puis apres le ob_start qui permet de mettre en buffering les informations
+on peut faire la function extract($params) sur nos paramettres
+
+### views 
+nous avons maintenant acces a nos $params [array] dans note vue du coup un foreach
+pour recuperer en mode object
+<?php foreach($users as $user): ?>
+et $user->email (le nom de la table dans le sql)
+<?php endforeach ?>
+
+
+***
+# test sur notre architecture ù*controller exemple
+telecharger via composer phpunit
+
+il faut extends la class que l'on creer pour le test de phpunit, Testcase
+
+pour qu'il comprenne que c'est un test, on peut ecrire au debut du nom de la function test, ou bien au dessus
+/** @test **/
+
+dans la function il attend quelque chose `$this->assertTrue(true)`; puis lancer le test phpunit ./vendor/bin/phpunit
+
+## assertEqual
+
+pour inserer differente valeur par exemple `$this->assertEquals('/', 'Controllers/Homeconstroller', 'index')`
