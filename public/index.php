@@ -24,8 +24,9 @@ use Router\Router;
 
 require '../vendor/autoload.php'; 
 
+define('BASE_VIEW_BASE', './views');
 $router = new Router();
-
+phpinfo();
 $router->register('/', ['Controllers\HomeController', 'index']);
  $router->register('/contact', function(){
     return 'contact';

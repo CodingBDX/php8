@@ -2,9 +2,11 @@
 
 namespace Controllers;
 
+use Source\Renderer;
+
 class HomeController {
 
     public function home() {
-        return 'homepage';
+        $renderer = new Renderer('home/index');
     }
 }

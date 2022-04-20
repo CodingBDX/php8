@@ -72,3 +72,26 @@ il y a d'autre class en php pour verifier class_exists, method_exists pour verif
 la valeur $action retourne deux chose, le controller et l action index, pour extraire ces donnees il suffit de faire
 `[$class, $method] = $action;
 
+***
+# render
+
+## revenir un cran en dessous
+pour revenir un cran en dessous `dirname(__DIR__)`
+
+## besoin d'acceder a un dossier
+la commande `define` avec 2 arguments permets de definir son chemin
+
+## composer definition namespace
+les namespaces principaux peuvent etre definit dans le composer `'source\': 'src/' `
+
+## ob_start()
+
+système de buffering
+permeter d'extraire des parametres (variable) avant de require une 'view' par exemple
+`ob_get_clean()` pour relacher le tampon
+
+## renderer::make('home/index')
+plus esthetique et simple de rendre une vue en utilisant type `static`
+
+## class magic
+permet de faire adopter a la class ou function un comportement, elle commence toujours par _to
